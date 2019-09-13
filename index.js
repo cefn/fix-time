@@ -24,13 +24,13 @@ module.exports = function (str, opts) {
     var res = {};
     for (var i = 0; i < tokens.length; i++) {
         var t = tokens[i];
-        var next = tokens[i+1];
-        var prev = tokens[i-1];
+        var next = tokens[i + 1];
+        var prev = tokens[i - 1];
         var m;
-        
+
         if (m = /(\d+)(st|nd|rd|th)/i.exec(t)) {
             if (next === 'of') {
-                next = tokens[i+2];
+                next = tokens[i + 2];
                 i++;
             }
             res.date = Number(m[1]);
@@ -40,26 +40,26 @@ module.exports = function (str, opts) {
             }
         }
         else if ((m = /(\d+)(st|nd|rd|th)?/i.exec(next))
-        && monthish(t)) {
+            && monthish(t)) {
             res.month = t;
             res.date = Number(m[1]);
             i++;
-            if (/^\d+$/.test(tokens[i+1])) { // year
-                res.year = Number(tokens[i+1]);
+            if (/^\d+$/.test(tokens[i + 1])) { // year
+                res.year = Number(tokens[i + 1]);
                 i++;
             }
         }
         else if ((m = hmsre.exec(t)) && isunit(next)) {
-            if (tokens[i-1] === 'in') {
+            if (tokens[i - 1] === 'in') {
                 for (var j = i; j < tokens.length; j += 2) {
-                    if (tokens[j] === 'and') j --;
+                    if (tokens[j] === 'and') j--;
                     else if ((m = hmsre.exec(tokens[j]))
-                    && ishunit(tokens[j+1])) {
-                        addu(parseh(tokens[j]), nunit(tokens[j+1]));
+                        && ishunit(tokens[j + 1])) {
+                        addu(parseh(tokens[j]), nunit(tokens[j + 1]));
                     }
                     else if ((m = /^(\d+\.?\d*)/.exec(tokens[j]))
-                    && isdunit(tokens[j+1])) {
-                        daddu(Number(m[1]), nunit(tokens[j+1]));
+                        && isdunit(tokens[j + 1])) {
+                        daddu(Number(m[1]), nunit(tokens[j + 1]));
                     }
                     else break;
                 }
@@ -73,28 +73,28 @@ module.exports = function (str, opts) {
                     }
                 }
                 if (j === tokens.length) continue;
-                
+
                 for (var k = i; k < j; k++) {
-                    if ((m = hmsre.exec(tokens[k])) && ishunit(tokens[k+1])) {
-                        subu(parseh(tokens[k]), nunit(tokens[k+1]));
+                    if ((m = hmsre.exec(tokens[k])) && ishunit(tokens[k + 1])) {
+                        subu(parseh(tokens[k]), nunit(tokens[k + 1]));
                     }
                     else if ((m = /^(\d+\.?\d*)/.exec(tokens[k]))
-                    && isdunit(tokens[k+1])) {
-                        dsubu(Number(m[1]), nunit(tokens[k+1]));
+                        && isdunit(tokens[k + 1])) {
+                        dsubu(Number(m[1]), nunit(tokens[k + 1]));
                     }
                 }
                 i = j;
             }
         }
         else if (/noon/.test(t)) {
-          res.hours = 12
-          res.minutes = 0
-          res.seconds = 0
+            res.hours = 12
+            res.minutes = 0
+            res.seconds = 0
         }
         else if (/midnight/.test(t)) {
-          res.hours = 0
-          res.minutes = 0
-          res.seconds = 0
+            res.hours = 0
+            res.minutes = 0
+            res.seconds = 0
         }
         else if (/\d+[:h]\d+/.test(t) || /^(am|pm)/.test(next)) {
             var hms = parseh(t, next);
@@ -136,15 +136,15 @@ module.exports = function (str, opts) {
             else if (res.date === undefined && x <= 31) res.date = x;
             else if (res.year === undefined && x > 31) res.year = x;
             else if (res.year == undefined
-            && res.hours !== undefined && res.date !== undefined) {
+                && res.hours !== undefined && res.date !== undefined) {
                 res.year = x;
             }
             else if (res.hours === undefined
-            && res.date !== undefined && res.year !== undefined) {
+                && res.date !== undefined && res.year !== undefined) {
                 res.hours = x;
             }
             else if (res.date === undefined
-            && res.hours !== undefined && res.year !== undefined) {
+                && res.hours !== undefined && res.year !== undefined) {
                 res.date = x;
             }
         }
@@ -162,7 +162,7 @@ module.exports = function (str, opts) {
             res.year = now.getFullYear();
         }
         else if (/^to?m+o?r+o?w?/.test(t) && res.date === undefined) {
-            var tomorrow = new Date(now.valueOf() + 24*60*60*1000);
+            var tomorrow = new Date(now.valueOf() + 24 * 60 * 60 * 1000);
             res.date = tomorrow.getDate();
             if (res.month === undefined) {
                 res.month = months[tomorrow.getMonth()];
@@ -172,7 +172,7 @@ module.exports = function (str, opts) {
             }
         }
         else if (/^yesterday/.test(t) && res.date === undefined) {
-            var yst = new Date(now.valueOf() - 24*60*60*1000);
+            var yst = new Date(now.valueOf() - 24 * 60 * 60 * 1000);
             res.date = yst.getDate();
             if (res.month === undefined) {
                 res.month = months[yst.getMonth()];
@@ -193,7 +193,7 @@ module.exports = function (str, opts) {
             setFromDay(t, 0);
         }
     }
-    
+
     if (res.year < 100) {
         var y = now.getFullYear();
         var py = y % 100;
@@ -221,18 +221,18 @@ module.exports = function (str, opts) {
     if (monthSet !== undefined && out.getMonth() !== monthSet) {
         out.setMonth(monthSet);
     }
-     
+
     if (res.year) out.setYear(res.year);
     else if (out < now && !ago
-    && (Math.abs(out.getMonth()+12 -now.getMonth()) % 12) >= 1) {
+        && (Math.abs(out.getMonth() + 12 - now.getMonth()) % 12) >= 1) {
         out.setYear(now.getFullYear() + 1);
     }
     return out;
-    
-    function setFromDay (t, x) {
+
+    function setFromDay(t, x) {
         var dayi = days.indexOf(nday(t));
         var xdays = (7 + dayi - now.getDay()) % 7 + x;
-        var d = new Date(now.valueOf() + xdays*24*60*60*1000);
+        var d = new Date(now.valueOf() + xdays * 24 * 60 * 60 * 1000);
         res.date = d.getDate();
         if (res.month === undefined) {
             res.month = months[d.getMonth()];
@@ -241,8 +241,8 @@ module.exports = function (str, opts) {
             res.year = d.getFullYear();
         }
     }
-    
-    function opu (hms, u, op) {
+
+    function opu(hms, u, op) {
         if (u == 'hours') {
             res.hours = op(now.getHours(), hms[0]);
             res.minutes = op(now.getMinutes(), hms[1] === null ? 0 : hms[1]);
@@ -259,10 +259,10 @@ module.exports = function (str, opts) {
             res.seconds = op(now.getSeconds(), hms[0] === null ? 0 : hms[0]);
         }
     }
-    function subu (hms, u) { opu(hms, u, sub) }
-    function addu (hms, u) { opu(hms, u, add) }
-    
-    function dopu (n, u, op) {
+    function subu(hms, u) { opu(hms, u, sub) }
+    function addu(hms, u) { opu(hms, u, add) }
+
+    function dopu(n, u, op) {
         if (res.hours === undefined) res.hours = now.getHours();
         if (res.minutes === undefined) res.minutes = now.getMinutes();
         if (res.seconds === undefined) res.seconds = now.getSeconds();
@@ -270,7 +270,7 @@ module.exports = function (str, opts) {
             res.date = op(now.getDate(), n);
         }
         else if (u === 'weeks') {
-            res.date = op(now.getDate(), n*7);
+            res.date = op(now.getDate(), n * 7);
         }
         else if (u === 'months') {
             res.month = op(now.getMonth(), n);
@@ -279,26 +279,26 @@ module.exports = function (str, opts) {
             res.year = op(now.getFullYear(), n);
         }
     }
-    function dsubu (n, u) { dopu(n, u, sub) }
-    function daddu (n, u) { dopu(n, u, add) }
+    function dsubu(n, u) { dopu(n, u, sub) }
+    function daddu(n, u) { dopu(n, u, add) }
 };
 
-function add (a, b) { return a + b }
-function sub (a, b) { return a - b }
+function add(a, b) { return a + b }
+function sub(a, b) { return a - b }
 
-function lc (s) { return String(s).toLowerCase() }
+function lc(s) { return String(s).toLowerCase() }
 
-function ishunit (s) {
+function ishunit(s) {
     var n = nunit(s);
     return n === 'hours' || n === 'minutes' || n === 'seconds';
 }
-function isdunit (s) {
+function isdunit(s) {
     var n = nunit(s);
     return n === 'days' || n === 'weeks' || n === 'months' || n === 'years';
 }
-function isunit (s) { return Boolean(nunit(s)) }
+function isunit(s) { return Boolean(nunit(s)) }
 
-function nunit (s) {
+function nunit(s) {
     if (/^(ms|millisecs?|milliseconds?)$/.test(s)) return 'milliseconds';
     if (/^(s|secs?|seconds?)$/.test(s)) return 'seconds';
     if (/^(m|mins?|minutes?)$/.test(s)) return 'minutes';
@@ -309,13 +309,13 @@ function nunit (s) {
     if (/^(y|yrs?|years?)$/.test(s)) return 'years';
 }
 
-function monthish (s) { return Boolean(nmonth(s)) }
+function monthish(s) { return Boolean(nmonth(s)) }
 
-function dayish (s) {
+function dayish(s) {
     return /^(mon|tue|wed|thu|fri|sat|sun)/i.test(s);
 }
 
-function nmonth (s) {
+function nmonth(s) {
     if (/^jan/i.test(s)) return 'January';
     if (/^feb/i.test(s)) return 'February';
     if (/^mar/i.test(s)) return 'March';
@@ -330,7 +330,7 @@ function nmonth (s) {
     if (/^dec/i.test(s)) return 'December';
 }
 
-function nday (s) {
+function nday(s) {
     if (/^mon/i.test(s)) return 'Monday';
     if (/^tue/i.test(s)) return 'Tuesday';
     if (/^wed/i.test(s)) return 'Wednesday';
@@ -340,9 +340,9 @@ function nday (s) {
     if (/^sun/i.test(s)) return 'Sunday';
 }
 
-function parseh (s, next) {
+function parseh(s, next) {
     var m = /(\d+\.?\d*)(?:[:h](\d+\.?\d*)(?:[:m](\d+\.?\d*s?\.?\d*))?)?/.exec(s);
-    var hms = [ Number(m[1]), null, null ];
+    var hms = [Number(m[1]), null, null];
     if (/^am/.test(next) && hms[0] == 12) hms[0] -= 12;
     if (/^pm/.test(next) && hms[0] < 12) hms[0] += 12;
     if (m[2]) hms[1] = Number(m[2]);
@@ -358,6 +358,6 @@ function parseh (s, next) {
     return hms;
 }
 
-function floorup (x) {
+function floorup(x) {
     return Math.floor(Math.round(x * 1e6) / 1e6);
 }
