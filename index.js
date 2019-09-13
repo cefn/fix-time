@@ -18,7 +18,12 @@ var tokre = RegExp(
 module.exports = function (str, opts) {
     if (!opts) opts = {};
     var now = opts.now || new Date;
-    if (typeof now === 'number' || typeof now === 'string') now = new Date(now);
+    if (typeof now === 'number' || typeof now === 'string') {
+        now = new Date(now);
+        if (!opts.legacy) {
+            now.setUTCMilliseconds(0);
+        }
+    }
     var ago = false;
     var tokens = str.split(tokre).filter(Boolean).map(lc);
     var res = {};
