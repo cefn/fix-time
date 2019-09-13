@@ -15,6 +15,8 @@ var tokre = RegExp(
     + '|([A-Za-z]+)' + hmsre.source
 );
 
+var delimiterRe = /^([^a-zA-Z0-9\d\s\u00C0-\u00FF])(.*)\1$/;
+
 module.exports = function (str, opts) {
     if (!opts) opts = {};
     var now = opts.now || new Date;
@@ -22,6 +24,16 @@ module.exports = function (str, opts) {
         now = new Date(now);
         if (!opts.legacy) {
             now.setUTCMilliseconds(0);
+        }
+    }
+    while (true) {
+        var match = str.match(delimiterRe);
+        if (match) {
+            str = match[2];
+            continue;
+        }
+        else {
+            break;
         }
     }
     var ago = false;
