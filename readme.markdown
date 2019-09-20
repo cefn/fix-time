@@ -67,8 +67,9 @@ Parse `str`, returning a Date instance `d` or null if no time could be parsed.
 
 With [npm](https://npmjs.org) do:
 
+
 ```
-npm install cefn/fix-time#stable
+npm install fix-time
 ```
 
 # license
