@@ -1,15 +1,21 @@
-# parse-messy-time
+# tidy-time
 
-parse messy human date and time strings
+Parse messy human date and time strings
 
-[![build status](https://travis-ci.org/substack/parse-messy-time.svg)](https://travis-ci.org/substack/parse-messy-time)
+Forked from substack/parse-messy-time to add some improvements. Notably...
+
+* Times which make no sense now return null instead of last night 12am
+* Times don't have an arbitrary number of milliseconds derived from the momentary Date() they were created
+* Symmetrical delimiters are removed (' " `)
 
 # example
 
+## parse.js
+
 ```
-var parse = require('parse-messy-time');
+var tidyTime = require('tidy-time');
 var q = process.argv.slice(2).join(' ');
-console.log(parse(q));
+console.log(tidyTime(q));
 ```
 
 output:
@@ -44,12 +50,12 @@ Tue Apr 14 2015 09:50:12 GMT-0700 (PDT)
 # methods
 
 ``` js
-var parse = require('parse-messy-time')
+var tidyTime = require('tidy-time')
 ```
 
-## var d = parse(str, opts)
+## var d = tidyTime(str, opts)
 
-Parse `str`, returning a Date instance `d`.
+Parse `str`, returning a Date instance `d` or null if no time could be parsed.
 
 * `opts.now` - interpret `str` with respect to `opts.now`, default `Date.now()`
 
@@ -58,7 +64,7 @@ Parse `str`, returning a Date instance `d`.
 With [npm](https://npmjs.org) do:
 
 ```
-npm install parse-messy-time
+npm install cefn/tidy-time#stable
 ```
 
 # license
