@@ -1,11 +1,15 @@
-# tidy-time
+# fix-time
 
 Parse messy human date and time strings
 
 Forked from substack/parse-messy-time to add some improvements. Notably...
 
-* Times which make no sense now return null instead of last night 12am
-* Times don't have an arbitrary number of milliseconds derived from the momentary Date() they were created
+Parse messy human date and time strings
+
+Forked from substack/parse-messy-time to add some improvements. Notably...
+
+* Times which make no sense now return null instead of last night 12am ( https://github.com/cefn/fix-time/issues/1 )
+* Times don't have an arbitrary number of milliseconds derived from the momentary Date() they were created ( https://github.com/substack/parse-messy-time/issues/10 ) 
 * Symmetrical delimiters are removed (' " `)
 
 # example
@@ -13,9 +17,9 @@ Forked from substack/parse-messy-time to add some improvements. Notably...
 ## parse.js
 
 ```
-var tidyTime = require('tidy-time');
+var fixTime = require('fix-time');
 var q = process.argv.slice(2).join(' ');
-console.log(tidyTime(q));
+console.log(fixTime(q));
 ```
 
 output:
@@ -50,10 +54,10 @@ Tue Apr 14 2015 09:50:12 GMT-0700 (PDT)
 # methods
 
 ``` js
-var tidyTime = require('tidy-time')
+var fixTime = require('fix-time')
 ```
 
-## var d = tidyTime(str, opts)
+## var d = fixTime(str, opts)
 
 Parse `str`, returning a Date instance `d` or null if no time could be parsed.
 
@@ -64,7 +68,7 @@ Parse `str`, returning a Date instance `d` or null if no time could be parsed.
 With [npm](https://npmjs.org) do:
 
 ```
-npm install cefn/tidy-time#stable
+npm install cefn/fix-time#stable
 ```
 
 # license

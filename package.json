@@ -1,5 +1,5 @@
 {
-  "name": "tidy-time",
+  "name": "fix-time",
   "version": "2.1.0",
   "description": "parse messy human date and time strings : forked from substack/parse-messy-time",
   "main": "index.js",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cefn/tidy-time.git"
+    "url": "git://github.com/cefn/fix-time.git"
   },
   "keywords": [
     "date",
@@ -28,7 +28,7 @@
   "author": "substack",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cefn/tidy-time/issues"
+    "url": "https://github.com/cefn/fix-time/issues"
   },
-  "homepage": "https://github.com/cefn/tidy-time"
+  "homepage": "https://github.com/cefn/fix-time"
 }
