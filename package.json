@@ -1,7 +1,7 @@
 {
-  "name": "parse-messy-time",
+  "name": "tidy-time",
   "version": "2.1.0",
-  "description": "parse messy human date and time strings",
+  "description": "parse messy human date and time strings : forked from substack/parse-messy-time",
   "main": "index.js",
   "directories": {
     "example": "example",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/substack/parse-messy-time.git"
+    "url": "git://github.com/cefn/tidy-time.git"
   },
   "keywords": [
     "date",
@@ -28,7 +28,7 @@
   "author": "substack",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/substack/parse-messy-time/issues"
+    "url": "https://github.com/cefn/tidy-time/issues"
   },
-  "homepage": "https://github.com/substack/parse-messy-time"
+  "homepage": "https://github.com/cefn/tidy-time"
 }
