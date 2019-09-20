@@ -26,7 +26,7 @@ module.exports = function (str, opts) {
             now.setUTCMilliseconds(0);
         }
     }
-    while (true) {
+    while (true) { //strips off one or more identical outer delimiters
         var match = str.match(delimiterRe);
         if (match) {
             str = match[2];
@@ -209,6 +209,10 @@ module.exports = function (str, opts) {
         else if (dayish(t) && res.date === undefined) {
             setFromDay(t, 0);
         }
+    }
+
+    if (Object.getOwnPropertyNames(res).length == 0) {
+        return null;
     }
 
     if (res.year < 100) {
