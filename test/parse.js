@@ -9,6 +9,7 @@ test('parse dates', function (t) {
     // Tue Apr 14 2015 09:46:01 GMT-0700 (PDT)
     var optsd = { now: new Date(1429029961000) };
 
+    t.equal(parse('elephant'), null, "returns null for meaningless string");
 
     t.equal(strftime('%T', parse('11am')), '11:00:00');
     t.equal(strftime('%T', parse('11pm')), '23:00:00');
