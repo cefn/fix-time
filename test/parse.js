@@ -4,11 +4,12 @@ var test = require('tape');
 var strftime = require('strftime');
 
 test('parse dates', function (t) {
-    var tomorrow = new Date((new Date).valueOf() + 24*60*60*1000);
-    
+    var tomorrow = new Date((new Date).valueOf() + 24 * 60 * 60 * 1000);
+
     // Tue Apr 14 2015 09:46:01 GMT-0700 (PDT)
     var optsd = { now: new Date(1429029961000) };
-    
+
+
     t.equal(strftime('%T', parse('11am')), '11:00:00');
     t.equal(strftime('%T', parse('11pm')), '23:00:00');
     t.equal(strftime('%T', parse('12:30am')), '00:30:00');
@@ -19,6 +20,18 @@ test('parse dates', function (t) {
     );
     t.equal(
         strftime('%F %T', parse('aug 25 2015 5pm')),
+        '2015-08-25 17:00:00'
+    );
+    t.equal(
+        strftime('%F %T', parse('`aug 25 2015 5pm`')),
+        '2015-08-25 17:00:00'
+    );
+    t.equal(
+        strftime('%F %T', parse('"aug 25 2015 5pm]"')),
+        '2015-08-25 17:00:00'
+    );
+    t.equal(
+        strftime('%F %T', parse("'aug 25 2015 5pm]'")),
         '2015-08-25 17:00:00'
     );
     t.equal(
