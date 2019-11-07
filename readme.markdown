@@ -4,10 +4,6 @@ Parse messy human date and time strings
 
 Forked from substack/parse-messy-time to add some improvements. Notably...
 
-Parse messy human date and time strings
-
-Forked from substack/parse-messy-time to add some improvements. Notably...
-
 * Times which make no sense now return null instead of last night 12am ( https://github.com/cefn/fix-time/issues/1 )
 * Times don't have an arbitrary number of milliseconds derived from the momentary Date() they were created ( https://github.com/substack/parse-messy-time/issues/10 ) 
 * Symmetrical delimiters are removed (' " `)
